@@ -1,0 +1,7 @@
+.idea
+a.log
+a.txt
+input.txt
+vendor/
+composer.json
+composer.lock
