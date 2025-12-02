@@ -1,11 +1,12 @@
 <?php
 
-$ranges = array_map(
-    fn($range) => explode('-', $range),
-    explode(',', trim(file_get_contents("input.txt")))
-);
-
-echo array_reduce($ranges, fn($sum, $range) => $sum += calculate($range[0], $range[1])) . PHP_EOL;
+echo array_reduce(
+    array_map(
+        fn($range) => explode('-', $range),
+        explode(',', trim(file_get_contents("input.txt")))
+    ),
+    fn($sum, $range) => $sum += calculate($range[0], $range[1])
+) . PHP_EOL;
 
 function calculate($begin, $end): int
 {
