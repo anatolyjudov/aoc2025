@@ -5,8 +5,7 @@ $ranges = array_map(
     explode(',', trim(file_get_contents("input.txt")))
 );
 
-echo
-    array_reduce($ranges, fn($sum, $range) => $sum += calculate($range[0], $range[1])) . PHP_EOL;
+echo array_reduce($ranges, fn($sum, $range) => $sum += calculate($range[0], $range[1])) . PHP_EOL;
 
 function calculate($begin, $end): int
 {
@@ -15,18 +14,13 @@ function calculate($begin, $end): int
         return calculate($begin, $border - 1) + calculate($border, $end);
     }
 
+    if (strlen($begin) % 2 !== 0) return 0;
+
     $sum = 0;
-    $len = strlen($begin);
+    $split = substr($begin, 0, strlen($begin) >> 1);
 
-    if ($len % 2 === 0) {
-        $splitSize = $len >> 1;
-        $split = substr($begin, 0, $splitSize);
-
-        while(($can = str_repeat($split, intdiv($len, $splitSize))) <= $end) {
-            if ($can >= $begin) $sum += $can;
-            $split++;
-        }
-    }
+    while(($can = str_repeat($split++, 2)) <= $end)
+        $sum += ($can >= $begin) ? $can : 0;
 
     return $sum;
 }
