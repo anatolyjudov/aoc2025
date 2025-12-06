@@ -12,8 +12,7 @@ function accessible(int $y, int $x): bool {
     global $rolls, $X, $Y;
     if ($rolls[$y][$x] === '.') return false;
     $n = 0;
-    for($dy = -1; $dy <= 1; $dy++) for($dx = -1; $dx <= 1; $dx++) {
-        if (($dx === 0) && ($dy === 0)) continue;
+    for($dy = -1; $dy <= 1; $dy++) for($dx = -1; $dx <= 1; $dx++) if (($dx !== 0) || ($dy !== 0)) {
         if ((($x + $dx) === $X) || (($y + $dy) === $Y) || (($x + $dx) < 0) || (($y + $dy) < 0)) continue;
         if ($rolls[$y + $dy][$x + $dx] === '@') $n++;
         if ($n === 4) return false;
